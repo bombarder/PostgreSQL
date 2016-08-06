@@ -1,50 +1,24 @@
 import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Main {
+    public static void main(String[] argv) throws ClassNotFoundException, SQLException {
 
-    public static void main(String[] argv) {
-
-        System.out.println("-------- PostgreSQL "
-                + "JDBC Connection Testing ------------");
-
-        try {
-
-            Class.forName("org.postgresql.Driver");
-
-        } catch (ClassNotFoundException e) {
-
-            System.out.println("Where is your PostgreSQL JDBC Driver? "
-                    + "Include in your library path!");
-            e.printStackTrace();
-            return;
-
-        }
-
-        System.out.println("PostgreSQL JDBC Driver Registered!");
-
-        Connection connection = null;
-
-        try {
-
-            connection = DriverManager.getConnection(
-                    "jdbc:postgresql://localhost/testdb", "postgres",
+        Class.forName("org.postgresql.Driver");
+        Connection connection = DriverManager.getConnection(
+                    "jdbc:postgresql://127.0.0.1:5433/sqlcmd", "postgres",
                     "2005980");
+        //insert
+        Statement statement = connection.createStatement();
+        String sql = "INSERT INTO users(name, password) " + "VALUES ('Stiven Pupkin', '1111')";
+        statement.executeUpdate(sql);
 
-        } catch (SQLException e) {
+        //select
+        statement = connection.createStatement();
 
-            System.out.println("Connection Failed! Check output console");
-            e.printStackTrace();
-            return;
 
-        }
 
-        if (connection != null) {
-            System.out.println("You made it, take control your database now!");
-        } else {
-            System.out.println("Failed to make connection!");
-        }
     }
-
 }
