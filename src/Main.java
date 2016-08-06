@@ -1,14 +1,11 @@
-import java.sql.DriverManager;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class Main {
     public static void main(String[] argv) throws ClassNotFoundException, SQLException {
 
         Class.forName("org.postgresql.Driver");
         Connection connection = DriverManager.getConnection(
-                    "jdbc:postgresql://127.0.0.1:5433/sqlcmd", "postgres",
+                    "jdbc:postgresql://127.0.0.1:5432/sqlcmd", "postgres",
                     "2005980");
         //insert
         Statement statement = connection.createStatement();
@@ -17,8 +14,12 @@ public class Main {
 
         //select
         statement = connection.createStatement();
-
-
-
+        ResultSet rs = statement.executeQuery("SELECT * FROM users WHERE id > 1");
+        while (rs.next()) {
+            System.out.print("Column 1 returned ");
+            System.out.println(rs.getString(1));
+        }
+        rs.close();
+        statement.close();
     }
 }
