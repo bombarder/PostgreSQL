@@ -20,7 +20,6 @@ public class DataBaseManagerTest {
     @Test
     public void testGetAllTablesNames(){
         String[] tableNames = manager.getTables();
-        assertEquals("" , Arrays.toString(tableNames));
+        assertEquals("[users]" , Arrays.toString(tableNames));
     }
-
 }

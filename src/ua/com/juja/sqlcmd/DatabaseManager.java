@@ -36,18 +36,17 @@ public class DatabaseManager {
         String delete = "DELETE FROM users WHERE id < 2";
         delete(connection, delete);
 
-        //delete
+        //update
         String update = "UPDATE users SET password = ? WHERE id > 4";
         String pass = "password" + new Random().nextInt();
         PreparedStatement ps = connection.prepareStatement(update);
         ps.setString(1, pass);
         ps.executeUpdate();
 
-
         connection.close();
     }
 
-    public String[] getTables(){
+    public String[] getTables() {
         try {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT table_name FROM information_schema.tables " +
@@ -57,12 +56,12 @@ public class DatabaseManager {
             while (rs.next()) {
                 tables[index++] = rs.getString("table_name");
             }
-            tables = Arrays.copyOf(tables, index + 1, String[].class);
+            tables = Arrays.copyOf(tables, index, String[].class);
             rs.close();
             statement.close();
             return tables;
 
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             return new String[0];
         }
@@ -75,14 +74,14 @@ public class DatabaseManager {
     public void connect(String database, String user, String password) {
         try {
             Class.forName("org.postgresql.Driver");
-        } catch (ClassNotFoundException e){
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
             System.out.println("Please, add jdbc jar to project. ");
         }
         try {
-            connection =  DriverManager.getConnection(
-                    "jdbc:postgresql://127.0.0.1:5432/" + database, user , password);
-        } catch (SQLException e){
+            connection = DriverManager.getConnection(
+                    "jdbc:postgresql://127.0.0.1:5433/" + database, user, password);
+        } catch (SQLException e) {
             System.out.println(String.format("Can't get connection for database:%s user:%s", database, user));
             e.printStackTrace();
             connection = null;
