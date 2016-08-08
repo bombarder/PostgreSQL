@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class DatabaseManager {
 
-    private static Connection connection;
+    private Connection connection;
 
     public static void main(String[] argv) throws ClassNotFoundException, SQLException {
 
@@ -26,15 +26,21 @@ public class DatabaseManager {
         //insert
         String insert = "INSERT INTO users(name, password) " +
                 "VALUES ('Stiven Pupkin', '1111')";
-        delete(connection, insert);
+        manager.delete(insert);
 
-        //select
-        String select = "SELECT * FROM users WHERE id > 1";
-        manager.select(connection, select);
+        //select users
+        String tableName = "users";
+
+//        String select = "SELECT * FROM " + tableName;
+//        manager.select(connection, select);
+
+        //select all tables
+        String selectAllTables = "SELECT COUNT(*) FROM " + tableName;
+        manager.selectAllTables(selectAllTables);
 
         //delete
-        String delete = "DELETE FROM users WHERE id < 2";
-        delete(connection, delete);
+        String delete = "DELETE FROM users WHERE id < 9";
+        manager.delete(delete);
 
         //update
         String update = "UPDATE users SET password = ? WHERE id > 4";
@@ -80,7 +86,7 @@ public class DatabaseManager {
         }
         try {
             connection = DriverManager.getConnection(
-                    "jdbc:postgresql://127.0.0.1:5433/" + database, user, password);
+                    "jdbc:postgresql://127.0.0.1:5432/" + database, user, password);
         } catch (SQLException e) {
             System.out.println(String.format("Can't get connection for database:%s user:%s", database, user));
             e.printStackTrace();
@@ -88,9 +94,9 @@ public class DatabaseManager {
         }
     }
 
-    public void select(Connection connection, String sql1) throws SQLException {
+    public void select(String selectQuery) throws SQLException {
         Statement statement = connection.createStatement();
-        ResultSet rs = statement.executeQuery(sql1);
+        ResultSet rs = statement.executeQuery(selectQuery);
         while (rs.next()) {
             System.out.println("id:" + rs.getString("id"));
             System.out.println("name:" + rs.getString("name"));
@@ -101,7 +107,29 @@ public class DatabaseManager {
         statement.close();
     }
 
-    public static void delete(Connection connection, String sql) throws SQLException {
+    public void selectAllTables(String selectQuery) throws SQLException {
+        Statement statement = connection.createStatement();
+        ResultSet rs = statement.executeQuery(selectQuery);
+        rs.next();
+        int size = rs.getInt(1);
+
+        Statement stmt = connection.createStatement();
+        ResultSetMetaData rsmd = rs.getMetaData();
+        System.out.println(rsmd.getColumnName(1));
+        System.out.println(rsmd.getColumnName(2));
+//        System.out.println(rsmd.getColumnName(3));
+
+        DataSet[] result = new DataSet[size];
+        int index = 0;
+
+        while (rs.next()) {
+            result[index++] = new DataSet();
+        }
+        rs.close();
+        statement.close();
+    }
+
+    public void delete(String sql) throws SQLException {
         Statement statement = connection.createStatement();
         statement.executeUpdate(sql);
         statement.close();
