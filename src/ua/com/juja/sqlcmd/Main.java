@@ -3,9 +3,6 @@ package ua.com.juja.sqlcmd;
 import java.sql.*;
 import java.util.Random;
 
-/**
- * Created by nmakarov on 8/9/2016.
- */
 public class Main {
 
     public static void main(String[] argv) throws ClassNotFoundException, SQLException {
