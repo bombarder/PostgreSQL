@@ -108,7 +108,7 @@ public class DatabaseManager implements JDBCDatabaseManager {
         }
         try {
             connection = DriverManager.getConnection(
-                    "jdbc:postgresql://localhost:5432/" + database, user,
+                    "jdbc:postgresql://localhost:5433/" + database, user,
                     password);
         } catch (SQLException e) {
             System.out.println(String.format("Cant get connection for database:%s user:%s", database, user));
