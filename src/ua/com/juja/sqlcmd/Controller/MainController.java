@@ -21,26 +21,35 @@ public class MainController {
         view.write("Please, enter database in format: name|login|password");
 
         while (true) {
-
-            String userInput = view.read();
-            String[] data = userInput.split("[|]");
-
-            String databaseName = data[0];
-            String userName = data[1];
-            String password = data[2];
-
             try {
+                String userInput = view.read();
+                String[] data = userInput.split("[|]");
+
+                if (data.length != 3) {
+                    throw new IllegalArgumentException("Input is not correct with sign '|', " +
+                            "waiting for 3, but have " + data.length);
+                }
+
+                String databaseName = data[0];
+                String userName = data[1];
+                String password = data[2];
+
                 manager.connect(databaseName, userName, password);
                 break;
             } catch (Exception e) {
-                String message = e.getMessage();
-                if (e.getCause() != null) {
-                    message += " " + e.getCause().getMessage();
-                }
-                view.write("not success " + message);
-                view.write("please, try again...");
+                printWarning(e);
             }
+
         }
-        view.write("You'ed successfully connected to the database!");
+        view.write("You've successfully connected to the database!");
+    }
+
+    private void printWarning(Exception e) {
+        String message = e.getMessage();
+        if (e.getCause() != null) {
+            message += " " + e.getCause().getMessage();
+        }
+        view.write("Not success, " + message);
+        view.write("please, try again...");
     }
 }
