@@ -3,7 +3,7 @@ package ua.com.juja.sqlcmd;
 import java.sql.*;
 import java.util.Arrays;
 
-public class DatabaseManager {
+public class DatabaseManager implements JDBCDatabaseManager {
 
     private Connection connection;
 
@@ -42,6 +42,7 @@ public class DatabaseManager {
         connection.close();
     }
 
+    @Override
     public DataSet[] getTableData(String tableName) {
         try {
             int size = getSize(tableName);
@@ -76,6 +77,7 @@ public class DatabaseManager {
         return size;
     }
 
+    @Override
     public String[] getTableNames() {
         try {
             Statement stmt = connection.createStatement();
@@ -96,6 +98,7 @@ public class DatabaseManager {
         }
     }
 
+    @Override
     public void connect(String database, String user, String password) {
         try {
             Class.forName("org.postgresql.Driver");
@@ -118,6 +121,7 @@ public class DatabaseManager {
         return connection;
     }
 
+    @Override
     public void clear(String tableName) {
         try {
             Statement stmt = connection.createStatement();
@@ -128,6 +132,7 @@ public class DatabaseManager {
         }
     }
 
+    @Override
     public void create(DataSet input) {
         try {
             Statement stmt = connection.createStatement();
@@ -152,6 +157,7 @@ public class DatabaseManager {
         return values;
     }
 
+    @Override
     public void update(String tableName, int id, DataSet newValue) {
         try {
             String tableNames = getNameFormated(newValue, "%s = ?,");

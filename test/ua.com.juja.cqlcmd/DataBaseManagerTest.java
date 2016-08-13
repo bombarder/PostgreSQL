@@ -4,12 +4,13 @@ import org.junit.Before;
 import org.junit.Test;
 import ua.com.juja.sqlcmd.DataSet;
 import ua.com.juja.sqlcmd.DatabaseManager;
+import ua.com.juja.sqlcmd.JDBCDatabaseManager;
 
 import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 
-public class DataBaseManagerTest {private DatabaseManager manager;
+public class DataBaseManagerTest {private JDBCDatabaseManager manager;
 
     @Before
     public void setup() {
