@@ -2,16 +2,22 @@ package ua.com.juja.sqlcmd.Controller;
 
 import ua.com.juja.sqlcmd.View.View;
 import ua.com.juja.sqlcmd.model.DatabaseManager;
-import ua.com.juja.sqlcmd.model.JDBCDatabaseManager;
-import ua.com.juja.sqlcmd.View.Console;
 
 public class MainController {
-    public static void main(String[] args) {
 
-        View view = new Console();
-        DatabaseManager manager = new JDBCDatabaseManager();
+    private View view;
+    private DatabaseManager manager;
 
-        view.write("привет юзер!");
+    public MainController(View view, DatabaseManager manager) {
+        this.view = view;
+        this.manager = manager;
+    }
+    public void run(){
+        connectToDB();
+    }
+
+    private void connectToDB() {
+        view.write("hi, user!");
         view.write("Please, enter database in format: name|login|password");
 
         while (true) {
@@ -28,7 +34,7 @@ public class MainController {
                 break;
             } catch (Exception e) {
                 String message = e.getMessage();
-                if (e.getCause() != null){
+                if (e.getCause() != null) {
                     message += " " + e.getCause().getMessage();
                 }
                 view.write("not success " + message);
