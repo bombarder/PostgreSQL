@@ -1,4 +1,4 @@
-package ua.com.juja.sqlcmd;
+package ua.com.juja.sqlcmd.model;
 
 import java.util.Arrays;
 
@@ -54,5 +54,4 @@ public class DataSet {
                 "values:" + Arrays.toString(getValues()) + "\n" +
                 "}";
     }
-
 }

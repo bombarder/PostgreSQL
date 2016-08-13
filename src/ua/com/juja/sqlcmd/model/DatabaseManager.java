@@ -1,11 +1,11 @@
-package ua.com.juja.sqlcmd;
+package ua.com.juja.sqlcmd.model;
 
-public interface JDBCDatabaseManager {
+public interface DatabaseManager {
     DataSet[] getTableData(String tableName);
 
     String[] getTableNames();
 
-    void connect(String database, String user, String password);
+    void connect(String database, String userName, String password);
 
     void clear(String tableName);
 

@@ -2,19 +2,19 @@ package ua.com.juja.cqlcmd;
 
 import org.junit.Before;
 import org.junit.Test;
-import ua.com.juja.sqlcmd.DataSet;
-import ua.com.juja.sqlcmd.DatabaseManager;
-import ua.com.juja.sqlcmd.JDBCDatabaseManager;
+import ua.com.juja.sqlcmd.model.DataSet;
+import ua.com.juja.sqlcmd.model.JDBCDatabaseManager;
+import ua.com.juja.sqlcmd.model.DatabaseManager;
 
 import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 
-public class DataBaseManagerTest {private JDBCDatabaseManager manager;
+public class DataBaseManagerTest {private DatabaseManager manager;
 
     @Before
     public void setup() {
-        manager = new DatabaseManager();
+        manager = new JDBCDatabaseManager();
         manager.connect("sqlcmd", "postgres", "2005980");
     }
 
