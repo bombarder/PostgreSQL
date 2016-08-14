@@ -3,14 +3,15 @@ package ua.com.juja.cqlcmd;
 import org.junit.Before;
 import org.junit.Test;
 import ua.com.juja.sqlcmd.model.DataSet;
-import ua.com.juja.sqlcmd.model.JDBCDatabaseManager;
 import ua.com.juja.sqlcmd.model.DatabaseManager;
+import ua.com.juja.sqlcmd.model.JDBCDatabaseManager;
 
 import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 
-public class DataBaseManagerTest {private DatabaseManager manager;
+public class DataBaseManagerTest {
+    private DatabaseManager manager;
 
     @Before
     public void setup() {
@@ -21,7 +22,7 @@ public class DataBaseManagerTest {private DatabaseManager manager;
     @Test
     public void testGetAllTableNames() {
         String[] tableNames = manager.getTableNames();
-        assertEquals("[test, users]", Arrays.toString(tableNames));
+        assertEquals("[users, test]", Arrays.toString(tableNames));
     }
 
     @Test
@@ -69,5 +70,17 @@ public class DataBaseManagerTest {private DatabaseManager manager;
         DataSet user = users[0];
         assertEquals("[name, password, id]", Arrays.toString(user.getNames()));
         assertEquals("[Pup, pass2, 13]", Arrays.toString(user.getValues()));
+    }
+
+    @Test
+    public void testGetColumnNames() {
+        // given
+        manager.clear("users");
+
+        //when
+        String[] columnNames = manager.getTableColumns("users");
+
+        //then
+        assertEquals("[name, password, id]", Arrays.toString(columnNames));
     }
 }
