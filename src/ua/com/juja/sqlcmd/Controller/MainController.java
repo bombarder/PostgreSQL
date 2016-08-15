@@ -2,6 +2,7 @@ package ua.com.juja.sqlcmd.Controller;
 
 import ua.com.juja.sqlcmd.Controller.command.Command;
 import ua.com.juja.sqlcmd.Controller.command.Exit;
+import ua.com.juja.sqlcmd.Controller.command.Help;
 import ua.com.juja.sqlcmd.View.View;
 import ua.com.juja.sqlcmd.model.DataSet;
 import ua.com.juja.sqlcmd.model.DatabaseManager;
@@ -17,7 +18,7 @@ public class MainController {
     public MainController(View view, DatabaseManager manager) {
         this.view = view;
         this.manager = manager;
-        this.commands = new Command[]{new Exit(view)};
+        this.commands = new Command[]{new Exit(view), new Help(view)};
 
     }
 
@@ -30,8 +31,8 @@ public class MainController {
 
             if (command.equals("list")) {
                 doList();
-            } else if (command.equals("help")) {
-                doHelp();
+            } else if (commands[1].canProcess(command)) {
+                commands[1].process(command);
             } else if (commands[0].canProcess(command)) {
                 commands[0].process(command);
             } else if (command.startsWith("find|")) {
@@ -77,22 +78,6 @@ public class MainController {
         view.write("--------------------");
         view.write(header);
         view.write("--------------------");
-    }
-
-    private void doHelp() {
-        view.write("Existing commands:");
-
-        view.write("\tlist");
-        view.write("\t\tget list of all database tables");
-
-        view.write("\tfind|tableName");
-        view.write("\t\tget tables data from");
-
-        view.write("\thelp");
-        view.write("\t\tfor list output on the screen");
-
-        view.write("\texit");
-        view.write("\t\texit from programme");
     }
 
     private void doList() {
