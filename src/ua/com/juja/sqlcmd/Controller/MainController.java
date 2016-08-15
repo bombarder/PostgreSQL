@@ -70,7 +70,9 @@ public class MainController {
         for (String name : tableColumns) {
             header += name + "|";
         }
+        view.write("--------------------");
         view.write(header);
+        view.write("--------------------");
     }
 
     private void doHelp() {
