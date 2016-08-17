@@ -16,7 +16,7 @@ public class Find implements Command {
 
     @Override
     public boolean canProcess(String command) {
-        return command.equals("find|users");
+        return command.startsWith("find|");
     }
     @Override
     public void process(String command) {
